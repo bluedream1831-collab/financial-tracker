@@ -16,6 +16,7 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
+            color: #111827;
         }
         
         .container {
@@ -74,6 +75,8 @@
             font-size: 1.1em;
             width: 120px;
             transition: all 0.3s;
+            background: #ffffff;
+            color: #111827;
         }
         
         input[type="number"]:focus {
@@ -92,6 +95,8 @@
             font-size: 1em;
             resize: vertical;
             transition: all 0.3s;
+            background: #ffffff;
+            color: #111827;
         }
         
         textarea:focus {
@@ -159,18 +164,30 @@
         .button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 12px 25px;
+            padding: 10px 18px;
             border: none;
-            border-radius: 8px;
-            font-size: 1em;
+            border-radius: 999px;
+            font-size: 0.95em;
             cursor: pointer;
             transition: all 0.3s;
             margin: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
         
         .button:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .button-secondary {
+            background: #e5e7eb;
+            color: #111827;
+        }
+        
+        .button-secondary:hover {
+            box-shadow: 0 4px 10px rgba(148,163,184,0.5);
         }
         
         .expense-grid {
@@ -305,17 +322,188 @@
             font-size: 0.9em;
             font-weight: 600;
         }
-        
+
+        /* 深色模式 */
+        body.dark-mode {
+            background: radial-gradient(circle at top, #1e293b 0%, #020617 60%);
+            color: #e5e7eb;
+        }
+
+        body.dark-mode .header {
+            background: #020617;
+            box-shadow: 0 10px 30px rgba(15,23,42,0.8);
+            border: 1px solid #1f2937;
+        }
+
+        body.dark-mode .header h1 {
+            color: #a5b4fc;
+        }
+
+        body.dark-mode .section {
+            background: #020617;
+            box-shadow: 0 8px 25px rgba(15,23,42,0.9);
+            border: 1px solid #111827;
+        }
+
+        body.dark-mode .section-title {
+            color: #a5b4fc;
+            border-bottom-color: #4f46e5;
+        }
+
+        body.dark-mode .editable-card {
+            background: #020617;
+            border-color: #111827;
+        }
+
+        body.dark-mode input[type="number"],
+        body.dark-mode textarea {
+            background: #020617;
+            border-color: #374151;
+            color: #e5e7eb;
+        }
+
+        body.dark-mode input[type="number"]:focus,
+        body.dark-mode textarea:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 2px rgba(79,70,229,0.4);
+        }
+
+        body.dark-mode .summary-item {
+            background: #020617;
+            border-left-color: #4f46e5;
+        }
+
+        body.dark-mode .summary-label {
+            color: #9ca3af;
+        }
+
+        body.dark-mode .summary-value {
+            color: #e5e7eb;
+        }
+
+        body.dark-mode .policy-item {
+            background: #020617;
+            border-color: #111827;
+        }
+
+        body.dark-mode .expense-item {
+            background: #020617;
+            border-color: #4f46e5;
+        }
+
+        body.dark-mode .total-box {
+            background: radial-gradient(circle at top left, #0f172a 0%, #111827 50%, #020617 100%);
+        }
+
+        body.dark-mode .alert-info {
+            background: #0b1120;
+            border-left-color: #3b82f6;
+            color: #bfdbfe;
+        }
+
+        body.dark-mode .alert-warning {
+            background: #422006;
+            border-left-color: #facc15;
+            color: #fef9c3;
+        }
+
+        body.dark-mode .alert-success {
+            background: #022c22;
+            border-left-color: #22c55e;
+            color: #bbf7d0;
+        }
+
+        body.dark-mode .alert-danger {
+            background: #450a0a;
+            border-left-color: #f97373;
+            color: #fecaca;
+        }
+
+        body.dark-mode .disaster-info {
+            background: #020617;
+            color: #e5e7eb;
+        }
+
+        body.dark-mode .margin-info {
+            background: #020617;
+        }
+
+        body.dark-mode .margin-info.safe {
+            background: #022c22;
+            color: #bbf7d0;
+        }
+
+        body.dark-mode .margin-info.warning {
+            background: #451a03;
+            color: #fed7aa;
+        }
+
+        body.dark-mode .margin-info.danger {
+            background: #450a0a;
+            color: #fecaca;
+        }
+
+        body.dark-mode .button-secondary {
+            background: #111827;
+            color: #e5e7eb;
+        }
+
+        body.dark-mode .button-secondary:hover {
+            box-shadow: 0 4px 10px rgba(15,23,42,0.8);
+        }
+
+        body.dark-mode .progress-bar-track {
+            background: #020617;
+        }
+
+        body.dark-mode .expense-item[style*="background: #eff6ff"],
+        body.dark-mode .expense-item[style*="background: #fef3c7"],
+        body.dark-mode .expense-item[style*="background: #fee2e2"],
+        body.dark-mode .disaster-info[style*="background:#ecfdf5"],
+        body.dark-mode .disaster-info[style*="background:#ecfeff"],
+        body.dark-mode .disaster-info[style*="background:#fef9c3"],
+        body.dark-mode .disaster-info[style*="background:#fff7ed"],
+        body.dark-mode .disaster-info[style*="background:#fefce8"],
+        body.dark-mode .disaster-info[style*="background:#f9fafb"] {
+            background: #020617 !important;
+        }
+
+        /* 列印樣式：專業版 PDF */
         @media print {
             body {
-                background: white;
+                background: white !important;
+                padding: 0;
+            }
+            .header, .section {
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                border: none !important;
+                background: white !important;
+                color: #111827 !important;
+            }
+            .container {
+                max-width: 100%;
+                margin: 0;
             }
             .button {
-                display: none;
+                display: none !important;
             }
             input[type="number"], textarea {
-                border: none;
-                background: transparent;
+                border: none !important;
+                background: transparent !important;
+                color: #111827 !important;
+            }
+            .total-box {
+                border-radius: 0;
+                background: #111827 !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .summary-item, .policy-item, .expense-item, .alert {
+                box-shadow: none !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
         }
     </style>
@@ -330,12 +518,13 @@
                 📊 儲蓄期採用 <strong>5% 年化報酬</strong>，7年後整包轉入 <strong>8% 配息型基金</strong>
             </div>
             <div style="color: #999; font-size: 0.95em; margin-top: 5px;">✨ 功能：借款比進度條 + 跌抗計算 + 股災模擬 + 儲蓄→配息自動試算 + 自償比 + 安全評分</div>
-            <div style="margin-top: 15px;">
-                <button class="button" onclick="calculateAll()">🔄 重新計算全部</button>
-                <button class="button" onclick="window.print()">🖨️ 列印報告</button>
+            <div style="margin-top: 15px; display:flex; flex-wrap:wrap; justify-content:center;">
+                <button class="button" onclick="calculateAll()">🔄 重新計算</button>
                 <button class="button" onclick="saveData()">💾 儲存數據</button>
                 <button class="button" onclick="loadData()">📂 載入數據</button>
                 <button class="button" onclick="resetFlexible()">🧹 彈性支出歸零</button>
+                <button class="button button-secondary" onclick="toggleDarkMode()" id="darkModeBtn">🌙 深色模式</button>
+                <button class="button" onclick="window.print()">📄 匯出專業 PDF</button>
             </div>
         </div>
 
@@ -362,7 +551,8 @@
             <div class="policy-grid">
                 <!-- 保單A -->
                 <div class="policy-item">
-                    <h4 style="color: #333; margin-bottom: 15px;">保單A - 法巴年金型</h4>
+                    <h4 style="color: #ccc; font-size:0.9em;">POLICY A</h4>
+                    <h4 style="color: #333; margin-bottom: 10px;">保單A - 法巴年金型</h4>
                     <div style="margin: 10px 0;">
                         <span style="color: #666;">淨值：</span>
                         <input type="number" id="asset_policy_a" value="47" step="0.1" min="0" onchange="calculateAll()"> 萬
@@ -408,8 +598,10 @@
                     <!-- 自償比 & 現金流貢獻 -->
                     <div class="disaster-info" style="margin-top:8px; background:#ecfdf5;">
                         <strong>💧 自償比與現金流貢獻</strong><br>
+                        配息（估算）：<span id="income_policy_a">—</span> 元/月<br>
+                        利息（估算）：<span id="interest_policy_a">—</span> 元/月<br>
                         自償比（配息 / 利息）：<span id="selfrep_policy_a">—</span><br>
-                        預估月淨現金流（配息-利息）：<span id="cashflow_policy_a">—</span> 元
+                        預估月淨現金流：<span id="cashflow_policy_a">—</span> 元/月
                     </div>
                     
                     <div style="margin: 10px 0; font-size: 0.9em; color: #999;">
@@ -419,7 +611,8 @@
 
                 <!-- 保單B -->
                 <div class="policy-item">
-                    <h4 style="color: #333; margin-bottom: 15px;">保單B - 法巴壽險型</h4>
+                    <h4 style="color: #ccc; font-size:0.9em;">POLICY B</h4>
+                    <h4 style="color: #333; margin-bottom: 10px;">保單B - 法巴壽險型</h4>
                     <div style="margin: 10px 0;">
                         <span style="color: #666;">淨值：</span>
                         <input type="number" id="asset_policy_b" value="146" step="0.1" min="0" onchange="calculateAll()"> 萬
@@ -461,8 +654,10 @@
 
                     <div class="disaster-info" style="margin-top:8px; background:#ecfdf5;">
                         <strong>💧 自償比與現金流貢獻</strong><br>
+                        配息（估算）：<span id="income_policy_b">—</span> 元/月<br>
+                        利息（估算）：<span id="interest_policy_b">—</span> 元/月<br>
                         自償比（配息 / 利息）：<span id="selfrep_policy_b">—</span><br>
-                        預估月淨現金流（配息-利息）：<span id="cashflow_policy_b">—</span> 元
+                        預估月淨現金流：<span id="cashflow_policy_b">—</span> 元/月
                     </div>
                     
                     <div style="margin: 10px 0; font-size: 0.9em; color: #999;">
@@ -472,7 +667,8 @@
 
                 <!-- 保單C -->
                 <div class="policy-item">
-                    <h4 style="color: #333; margin-bottom: 15px;">保單C - 安達年金型</h4>
+                    <h4 style="color: #ccc; font-size:0.9em;">POLICY C</h4>
+                    <h4 style="color: #333; margin-bottom: 10px;">保單C - 安達年金型</h4>
                     <div style="margin: 10px 0;">
                         <span style="color: #666;">淨值：</span>
                         <input type="number" id="asset_policy_c" value="178" step="0.1" min="0" onchange="calculateAll()"> 萬
@@ -514,8 +710,10 @@
 
                     <div class="disaster-info" style="margin-top:8px; background:#ecfdf5;">
                         <strong>💧 自償比與現金流貢獻</strong><br>
+                        配息（估算）：<span id="income_policy_c">—</span> 元/月<br>
+                        利息（估算）：<span id="interest_policy_c">—</span> 元/月<br>
                         自償比（配息 / 利息）：<span id="selfrep_policy_c">—</span><br>
-                        預估月淨現金流（配息-利息）：<span id="cashflow_policy_c">—</span> 元
+                        預估月淨現金流：<span id="cashflow_policy_c">—</span> 元/月
                     </div>
                     
                     <div style="margin: 10px 0; font-size: 0.9em; color: #999;">
@@ -525,7 +723,8 @@
 
                 <!-- 保單D -->
                 <div class="policy-item" style="border-color: #10b981; border-width: 3px;">
-                    <h4 style="color: #10b981; margin-bottom: 15px;">保單D - 安聯年金型 ⭐</h4>
+                    <h4 style="color: #ccc; font-size:0.9em;">POLICY D</h4>
+                    <h4 style="color: #10b981; margin-bottom: 10px;">保單D - 安聯年金型 ⭐</h4>
                     <div style="margin: 10px 0;">
                         <span style="color: #666;">淨值：</span>
                         <input type="number" id="asset_policy_d" value="324" step="0.1" min="0" onchange="calculateAll()"> 萬
@@ -567,8 +766,10 @@
 
                     <div class="disaster-info" style="margin-top:8px; background:#ecfdf5;">
                         <strong>💧 自償比與現金流貢獻</strong><br>
+                        配息（估算）：<span id="income_policy_d">—</span> 元/月<br>
+                        利息（估算）：<span id="interest_policy_d">—</span> 元/月<br>
                         自償比（配息 / 利息）：<span id="selfrep_policy_d">—</span><br>
-                        預估月淨現金流（配息-利息）：<span id="cashflow_policy_d">—</span> 元
+                        預估月淨現金流：<span id="cashflow_policy_d">—</span> 元/月
                     </div>
                     
                     <div style="margin: 10px 0; font-size: 0.9em; color: #999;">
@@ -592,7 +793,8 @@
             <div class="policy-grid">
                 <!-- ETF -->
                 <div class="policy-item">
-                    <h4 style="color: #333; margin-bottom: 15px;">台股高股息ETF（質押）</h4>
+                    <h4 style="color: #ccc; font-size:0.9em;">ETF PLEDGE</h4>
+                    <h4 style="color: #333; margin-bottom: 10px;">台股高股息ETF（質押）</h4>
                     <div style="margin: 10px 0;">
                         <span style="color: #666;">淨值：</span>
                         <input type="number" id="asset_etf" value="173" step="0.1" min="0" onchange="calculateAll()"> 萬
@@ -644,13 +846,15 @@
                     </div>
                     
                     <div style="margin: 10px 0; font-size: 0.9em; color: #999;">
-                        匯率對沖 + 流動性備用
+                        匯率對沖 + 流動性備用<br>
+                        <span style="font-size:0.85em; color:#6b7280;">（其中約 10,000 元/月 為 ETF 配息 → 已獨立計入自償比計算）</span>
                     </div>
                 </div>
 
                 <!-- 現金 -->
                 <div class="policy-item">
-                    <h4 style="color: #333; margin-bottom: 15px;">現金</h4>
+                    <h4 style="color: #ccc; font-size:0.9em;">CASH</h4>
+                    <h4 style="color: #333; margin-bottom: 10px;">現金</h4>
                     <div style="margin: 10px 0;">
                         <span style="color: #666;">帳面現金：</span>
                         <input type="number" id="asset_cash" value="45" step="0.1" min="0" onchange="calculateAll()"> 萬
@@ -664,7 +868,8 @@
 
                 <!-- 房貸與信貸 -->
                 <div class="policy-item">
-                    <h4 style="color: #333; margin-bottom: 15px;">房貸與信貸</h4>
+                    <h4 style="color: #ccc; font-size:0.9em;">LOANS</h4>
+                    <h4 style="color: #333; margin-bottom: 10px;">房貸與信貸</h4>
                     <div style="margin: 10px 0;">
                         <span style="color: #666;">房貸餘額：</span>
                         <input type="number" id="loan_mortgage" value="462" step="0.1" min="0" onchange="calculateAll()"> 萬
@@ -716,10 +921,13 @@
                     </div>
                 </div>
                 <div class="expense-item" style="border-left-color: #10b981;">
-                    <div style="color: #666; margin-bottom: 5px;">被動收入（保單配息）</div>
+                    <div style="color: #666; margin-bottom: 5px;">被動收入（配息總額）</div>
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <input type="number" id="income_passive" value="55000" step="1000" min="0" onchange="calculateAll()">
                         <span>元/月</span>
+                    </div>
+                    <div style="font-size:0.85em; color:#6b7280; margin-top:5px;">
+                        目前假設其中約 <strong>10,000 元/月</strong> 來自台股 ETF，其餘視為保單配息，並依保單淨值比例分配。
                     </div>
                 </div>
                 <div class="expense-item" style="border-left-color: #667eea; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
@@ -826,7 +1034,7 @@
             </div>
             <div class="expense-grid">
                 <div class="expense-item" style="border-left-color: #ef4444;">
-                    <div style="color: #666; margin-bottom: 5px;">保單借款利息</div>
+                    <div style="color: #666; margin-bottom: 5px;">保單借款利息（總額）</div>
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <input type="number" id="interest_policy_input" value="8800" step="100" min="0" onchange="calculateAll()">
                         <span>元/月</span>
@@ -907,7 +1115,7 @@
             <div class="alert alert-info">
                 <strong>📍 當前狀態</strong><br>
                 年齡：38歲 | 距離45歲：<strong>7年</strong><br>
-                目前月配息：<strong><span id="display_passive_income">5.5</span>萬</strong>（來自現有資產）<br>
+                目前月配息：<strong><span id="display_passive_income">5.5</span>萬</strong>（來自保單+ETF）<br>
                 目標：<strong>7萬/月</strong>
             </div>
 
@@ -1049,11 +1257,12 @@
                     <li><strong>7年儲蓄 → 8%配息自動試算</strong>：輸入收入/支出後，系統會用月盈餘自動算出 7 年後新增的月配息。</li>
                     <li><strong>借款比顏色分級</strong>：0–40%綠、40–60%黃綠、60–80%黃、80–90%橘、90%以上紅。</li>
                     <li><strong>股災 -30% / -40% + 自訂跌幅滑桿</strong>：可模擬 0～60% 任意跌幅後的借款比。</li>
-                    <li><strong>每張保單自償比 & 現金流貢獻</strong>：看「配息是否足以蓋過利息」。</li>
+                    <li><strong>每張保單自償比 & 現金流貢獻</strong>：現在依「保單淨值比例 + 保單配息45,000」重新試算。</li>
                     <li><strong>股票質押最低補繳試算</strong>：輸入目標借款比，算出至少要還多少萬。</li>
                     <li><strong>目標月配息 → 反推需要資產 & 報酬率</strong>：拆解 7 萬/月背後真正需要的「資本規模」。</li>
                     <li><strong>槓桿安全雷達 / 總體評分</strong>：把多個風險指標變成一個 0–100 分的「安全指數」。</li>
-                    <li><strong>策略備忘錄</strong>：寫下你的規則與下一步行動，和數據一起儲存。</li>
+                    <li><strong>深色模式切換</strong>：晚上的時候可以改用暗色，不傷眼。</li>
+                    <li><strong>專業 PDF 輸出</strong>：用瀏覽器列印 → 另存為 PDF，即可拿到專業排版報告。</li>
                 </ol>
 
                 <h4 style="color: #667eea; margin: 15px 0;">🔧 如何修改數據</h4>
@@ -1061,14 +1270,13 @@
                     <li>直接點擊任何數字框進行編輯。</li>
                     <li>修改後按 Enter 或點擊別處。</li>
                     <li>系統會自動重新計算所有相關數據。</li>
-                    <li>或點擊「🔄 重新計算全部」手動刷新。</li>
                 </ol>
 
                 <h4 style="color: #667eea; margin: 15px 0;">💾 儲存與載入</h4>
                 <ol style="margin-left: 20px;">
-                    <li>點「💾 儲存數據」→ 儲存在瀏覽器本機（localStorage）。</li>
+                    <li>「💾 儲存數據」→ 儲存在瀏覽器本機（localStorage）。</li>
                     <li>下次開啟同一台裝置同一瀏覽器會自動載入。</li>
-                    <li>也可點「📂 載入數據」手動載入。</li>
+                    <li>或點「📂 載入數據」手動載入。</li>
                 </ol>
 
                 <h4 style="color: #667eea; margin: 15px 0;">🧹 彈性支出歸零</h4>
@@ -1092,13 +1300,38 @@
     </div>
 
     <script>
+        // 深色模式切換
+        function toggleDarkMode() {
+            const body = document.body;
+            const isDark = body.classList.toggle('dark-mode');
+            localStorage.setItem('wcjDarkMode', isDark ? '1' : '0');
+            const btn = document.getElementById('darkModeBtn');
+            if (btn) {
+                btn.textContent = isDark ? '☀️ 淺色模式' : '🌙 深色模式';
+            }
+        }
+
+        function initDarkMode() {
+            try {
+                const saved = localStorage.getItem('wcjDarkMode');
+                const shouldDark = saved === '1';
+                if (shouldDark) {
+                    document.body.classList.add('dark-mode');
+                }
+                const btn = document.getElementById('darkModeBtn');
+                if (btn) {
+                    btn.textContent = shouldDark ? '☀️ 淺色模式' : '🌙 深色模式';
+                }
+            } catch (e) {
+                console.warn('讀取深色模式設定失敗:', e);
+            }
+        }
+
         // 安全更新元素內容的輔助函數
         function safeSetText(elementId, value) {
             const element = document.getElementById(elementId);
             if (element !== null) {
                 element.textContent = value;
-            } else {
-                console.warn(`元素 ${elementId} 不存在`);
             }
         }
 
@@ -1106,8 +1339,6 @@
             const element = document.getElementById(elementId);
             if (element) {
                 element.style[property] = value;
-            } else {
-                console.warn(`元素 ${elementId} 不存在`);
             }
         }
 
@@ -1115,8 +1346,6 @@
             const element = document.getElementById(elementId);
             if (element) {
                 element.innerHTML = value;
-            } else {
-                console.warn(`元素 ${elementId} 不存在`);
             }
         }
 
@@ -1152,10 +1381,8 @@
 
         // 更新進度條和跌抗信息
         function updateProgressBar(id, info, marginCall, liquidation) {
-            // 更新借款比顯示
             safeSetText('ratio_' + id, info.ratio.toFixed(1) + '%');
             
-            // 更新進度條
             const progressBar = document.getElementById('progress_' + id);
             if (progressBar) {
                 const colorClass = getRatioColorClass(info.ratio);
@@ -1164,7 +1391,6 @@
                 progressBar.className = 'progress-bar-fill ' + colorClass;
             }
             
-            // 更新跌抗信息
             const marginDiv = document.getElementById('margin_' + id);
             if (!marginDiv) return;
             
@@ -1180,7 +1406,6 @@
                 statusText = '【警戒！建議降低借款比】';
             }
             
-            // 特殊處理ETF（有145%警示線和130%追繳線）
             if (id === 'etf') {
                 const maintRatio = (info.ratio > 0) ? (100 / info.ratio * 100).toFixed(0) : 999;
                 let maintStatus = '';
@@ -1257,7 +1482,7 @@
             calculateAll();
         }
 
-        // 計算所有數據
+        // 主計算函數
         function calculateAll() {
             try {
                 // 讀取所有資產
@@ -1279,25 +1504,20 @@
 
                 const totalPolicyLoan = loanPolicyA + loanPolicyB + loanPolicyC + loanPolicyD;
 
-                // 計算並更新保單ABC的借款比和跌抗距離（80%補繳，90%斷頭）
+                // 借款比 / 跌抗距離
                 const infoA = calculateLeverageInfo(assetPolicyA, loanPolicyA, 80, 90);
-                updateProgressBar('policy_a', infoA, 80, 90);
-                
                 const infoB = calculateLeverageInfo(assetPolicyB, loanPolicyB, 80, 90);
-                updateProgressBar('policy_b', infoB, 80, 90);
-                
                 const infoC = calculateLeverageInfo(assetPolicyC, loanPolicyC, 80, 90);
-                updateProgressBar('policy_c', infoC, 80, 90);
-                
-                // 保單D（60%補繳，70%斷頭）
                 const infoD = calculateLeverageInfo(assetPolicyD, loanPolicyD, 60, 70);
-                updateProgressBar('policy_d', infoD, 60, 70);
-                
-                // ETF（借款比 68.97% & 76.9% 對應維持率 145/130）
                 const infoETF = calculateLeverageInfo(assetETF, loanETF, 68.97, 76.9);
+
+                updateProgressBar('policy_a', infoA, 80, 90);
+                updateProgressBar('policy_b', infoB, 80, 90);
+                updateProgressBar('policy_c', infoC, 80, 90);
+                updateProgressBar('policy_d', infoD, 60, 70);
                 updateProgressBar('etf', infoETF, 68.97, 76.9);
 
-                // 股災模擬固定 -30% / -40%
+                // 股災 -30 / -40
                 updateDisasterSim('policy_a', assetPolicyA, loanPolicyA);
                 updateDisasterSim('policy_b', assetPolicyB, loanPolicyB);
                 updateDisasterSim('policy_c', assetPolicyC, loanPolicyC);
@@ -1307,9 +1527,7 @@
                 // 自訂跌幅滑桿
                 const sliderEl = document.getElementById('disaster_slider');
                 let sliderDrop = 30;
-                if (sliderEl) {
-                    sliderDrop = parseFloat(sliderEl.value) || 0;
-                }
+                if (sliderEl) sliderDrop = parseFloat(sliderEl.value) || 0;
                 safeSetText('disaster_slider_value', sliderDrop.toFixed(0));
                 updateCustomDisasterSim('policy_a', assetPolicyA, loanPolicyA, sliderDrop);
                 updateCustomDisasterSim('policy_b', assetPolicyB, loanPolicyB, sliderDrop);
@@ -1327,10 +1545,9 @@
                 }
                 safeSetText('etf_min_repay', minRepay.toFixed(1));
 
-                // 計算總資產與負債
+                // 總資產與負債
                 const totalAssets = assetPolicyA + assetPolicyB + assetPolicyC + assetPolicyD + assetETF + assetCash;
-                const totalLiabilities = loanPolicyA + loanPolicyB + loanPolicyC + loanPolicyD + 
-                                        loanETF + loanCredit + loanMortgage;
+                const totalLiabilities = loanPolicyA + loanPolicyB + loanPolicyC + loanPolicyD + loanETF + loanCredit + loanMortgage;
                 const netAssets = totalAssets - totalLiabilities;
                 const leverageRatio = totalAssets > 0 ? (totalLiabilities / totalAssets * 100).toFixed(1) : 0;
 
@@ -1339,69 +1556,58 @@
                 safeSetText('net_assets', netAssets.toFixed(0));
                 safeSetText('leverage_ratio', leverageRatio);
 
-                // 計算可動用現金
                 const totalAvailableCash = assetCash + 50 + 36;
                 safeSetText('total_available_cash', totalAvailableCash.toFixed(0));
 
-                // 讀取收入
+                // 收入
                 const incomeActive = parseFloat(document.getElementById('income_active').value) || 0;
                 const incomePassive = parseFloat(document.getElementById('income_passive').value) || 0;
                 const totalIncome = incomeActive + incomePassive;
 
-                // 讀取固定支出
+                // 固定支出
                 const expenseMortgage = parseFloat(document.getElementById('expense_mortgage').value) || 0;
                 const expenseCredit = parseFloat(document.getElementById('expense_credit').value) || 0;
                 const expenseLiving = parseFloat(document.getElementById('expense_living').value) || 0;
                 const expenseInsurance = parseFloat(document.getElementById('expense_insurance').value) || 0;
                 const expenseCommunication = parseFloat(document.getElementById('expense_communication').value) || 0;
                 const expenseHealth = parseFloat(document.getElementById('expense_health').value) || 0;
-                const totalFixedExpense = expenseMortgage + expenseCredit + expenseLiving + expenseInsurance + 
-                                        expenseCommunication + expenseHealth;
+                const totalFixedExpense = expenseMortgage + expenseCredit + expenseLiving + expenseInsurance + expenseCommunication + expenseHealth;
 
-                // 讀取彈性支出
+                // 彈性支出
                 const expenseEntertainment = parseFloat(document.getElementById('expense_entertainment').value) || 0;
                 const expenseShopping = parseFloat(document.getElementById('expense_shopping').value) || 0;
                 const expenseLearning = parseFloat(document.getElementById('expense_learning').value) || 0;
                 const expenseOther = parseFloat(document.getElementById('expense_other').value) || 0;
                 const totalFlexibleExpense = expenseEntertainment + expenseShopping + expenseLearning + expenseOther;
 
-                // 計算利息（保單利息和ETF利息都可編輯）
+                // 利息
                 const interestPolicyAuto = Math.max(0, Math.round(totalPolicyLoan * 10000 * 0.04 / 12));
                 const interestETFAuto = Math.max(0, Math.round(loanETF * 10000 * 0.03 / 12));
                 
-                // 讀取用戶輸入的利息值
                 const interestPolicyInputElement = document.getElementById('interest_policy_input');
                 const interestETFInputElement = document.getElementById('interest_etf_input');
-                
                 let interestPolicyInput = parseFloat(interestPolicyInputElement.value);
                 if (!interestPolicyInput || isNaN(interestPolicyInput) || interestPolicyInput < 0) {
                     interestPolicyInput = interestPolicyAuto;
                     interestPolicyInputElement.value = interestPolicyAuto;
                 }
-                
                 let interestETFInput = parseFloat(interestETFInputElement.value);
                 if (!interestETFInput || isNaN(interestETFInput) || interestETFInput < 0) {
                     interestETFInput = interestETFAuto;
                     interestETFInputElement.value = interestETFAuto;
                 }
-                
                 const totalInterest = interestPolicyInput + interestETFInput;
 
-                // 更新顯示
                 safeSetText('total_income', totalIncome.toLocaleString());
                 safeSetText('display_total_income', totalIncome.toLocaleString());
-                
                 safeSetText('total_fixed_expense', totalFixedExpense.toLocaleString());
                 safeSetText('total_flexible_expense', totalFlexibleExpense.toLocaleString());
-                
                 safeSetText('interest_policy_auto', interestPolicyAuto.toLocaleString());
                 safeSetText('interest_etf_auto', interestETFAuto.toLocaleString());
                 safeSetText('total_interest', totalInterest.toLocaleString());
-
                 safeSetText('display_policy_loan', totalPolicyLoan.toFixed(1));
                 safeSetText('display_etf_loan', loanETF.toFixed(1));
 
-                // 計算總支出和盈餘
                 const totalExpense = totalFixedExpense + totalFlexibleExpense + totalInterest;
                 const monthlySurplus = totalIncome - totalExpense;
                 const savingRate = totalIncome > 0 ? (monthlySurplus / totalIncome * 100).toFixed(1) : 0;
@@ -1412,21 +1618,18 @@
                 safeSetText('saving_rate', savingRate);
                 safeSetText('annual_investment', annualInvestment.toLocaleString());
 
-                // 更新配息進度（目前）
-                const passiveIncome = incomePassive / 10000; // 萬
-                const completionRate = (passiveIncome / 7 * 100).toFixed(0);
-
-                safeSetText('display_passive_income', passiveIncome.toFixed(1));
+                // 配息進度
+                const passiveIncomeWan = incomePassive / 10000;
+                const completionRate = (passiveIncomeWan / 7 * 100).toFixed(0);
+                safeSetText('display_passive_income', passiveIncomeWan.toFixed(1));
                 safeSetText('progress_percentage', completionRate);
-                safeSetText('progress_text', passiveIncome.toFixed(1) + '萬 / 7萬');
+                safeSetText('progress_text', passiveIncomeWan.toFixed(1) + '萬 / 7萬');
                 safeSetStyle('progress_bar', 'width', completionRate + '%');
 
                 const progressBar = document.getElementById('progress_bar');
                 if (progressBar) {
                     const p = parseFloat(completionRate);
-                    if (p >= 100) {
-                        progressBar.style.background = 'linear-gradient(90deg, #10b981, #059669)';
-                    } else if (p >= 80) {
+                    if (p >= 80) {
                         progressBar.style.background = 'linear-gradient(90deg, #10b981, #059669)';
                     } else if (p >= 60) {
                         progressBar.style.background = 'linear-gradient(90deg, #f59e0b, #d97706)';
@@ -1435,13 +1638,30 @@
                     }
                 }
 
-                // ===== 每張保單「自償比」 & 現金流貢獻 =====
+                // ===== 自償比：把配息拆成「保單 + ETF」 =====
                 const policyAssets = [assetPolicyA, assetPolicyB, assetPolicyC, assetPolicyD];
                 const policyLoans = [loanPolicyA, loanPolicyB, loanPolicyC, loanPolicyD];
                 const policyIds = ['policy_a', 'policy_b', 'policy_c', 'policy_d'];
                 const totalPolicyAssets = policyAssets.reduce((a,b)=>a+b,0);
 
-                const totalPolicyInterestInput = interestPolicyInput; // 全部保單利息
+                const totalPassive = incomePassive; // 全部配息
+                const baseTotal = 55000; // 目前設定參考值
+                let etfPassive = 0;
+                let policyPassiveTotal = 0;
+
+                if (totalPassive <= 0) {
+                    etfPassive = 0;
+                    policyPassiveTotal = 0;
+                } else {
+                    // 依「10,000 / 55,000」比例換算 ETF 配息
+                    const etfRatio = 10000 / baseTotal;
+                    etfPassive = totalPassive * etfRatio;
+                    if (etfPassive > totalPassive) etfPassive = totalPassive;
+                    policyPassiveTotal = totalPassive - etfPassive;
+                }
+
+                const totalPolicyInterestInput = interestPolicyInput;
+
                 for (let i = 0; i < policyIds.length; i++) {
                     const id = policyIds[i];
                     const aVal = policyAssets[i];
@@ -1450,11 +1670,11 @@
                     let incomeShare = 0;
                     let interestShare = 0;
 
-                    if (totalPolicyAssets > 0) {
-                        incomeShare = incomePassive * (aVal / totalPolicyAssets); // 該保單估計月配息
+                    if (totalPolicyAssets > 0 && policyPassiveTotal > 0) {
+                        incomeShare = policyPassiveTotal * (aVal / totalPolicyAssets);
                     }
                     if (totalPolicyLoan > 0 && totalPolicyInterestInput > 0) {
-                        interestShare = totalPolicyInterestInput * (lVal / totalPolicyLoan); // 該保單估計月利息
+                        interestShare = totalPolicyInterestInput * (lVal / totalPolicyLoan);
                     }
 
                     let selfRepText = '—';
@@ -1468,26 +1688,26 @@
                     }
 
                     const netCashflow = incomeShare - interestShare;
+                    safeSetText('income_' + id, incomeShare.toFixed(0));
+                    safeSetText('interest_' + id, interestShare.toFixed(0));
                     safeSetText('selfrep_' + id, selfRepText);
                     safeSetText('cashflow_' + id, netCashflow.toFixed(0));
                 }
 
-                // ===== 7年儲蓄（5%）→ 8%配息試算 =====
+                // ===== 7年儲蓄（5%）→ 8%配息 =====
                 const yearlyInvestment = monthlySurplus > 0 ? monthlySurplus * 12 : 0;
                 const years = 7;
-                const r_save = 0.05; // 儲蓄期年化5%
+                const r_save = 0.05;
 
                 let futureValueSaving = 0;
                 if (yearlyInvestment > 0) {
                     futureValueSaving = yearlyInvestment * (Math.pow(1 + r_save, years) - 1) / r_save;
                 }
 
-                // 7年後把這一包錢轉入8%配息型基金
                 const r_yield = 0.08;
-                const newMonthlyIncome = futureValueSaving * r_yield / 12; // 元/月
+                const newMonthlyIncome = futureValueSaving * r_yield / 12;
                 const totalMonthlyPassive45 = incomePassive + newMonthlyIncome;
 
-                // 顯示為「萬」
                 const annualInvWan = (yearlyInvestment / 10000).toFixed(1);
                 const sevenYearInv = (yearlyInvestment * years / 10000).toFixed(1);
                 const fvWan = (futureValueSaving / 10000).toFixed(1);
@@ -1500,18 +1720,18 @@
                 safeSetText('estimated_income_45', newMonthlyIncomeWan);
                 safeSetText('estimated_total_passive_45', totalMonthlyPassiveWan);
 
-                // 達標預測文字
                 let targetPred = '';
-                const totalPassive = totalMonthlyPassive45 / 10000; // 萬
+                const totalPassive45Wan = totalMonthlyPassive45 / 10000;
+
                 if (yearlyInvestment <= 0) {
                     targetPred = '目前月盈餘為負或接近 0，7 年後無法額外累積可觀資產，建議優先調整收支結構（提高月盈餘）再談 7 年計畫。';
                 } else {
-                    if (totalPassive >= 7) {
+                    if (totalPassive45Wan >= 7) {
                         targetPred = `以目前月盈餘約 <strong>${(monthlySurplus/10000).toFixed(1)} 萬</strong> 計算，採用「<strong>儲蓄期5%</strong> + <strong>配息期8%</strong>」的保守模型：<br>
                         • 7 年後新增月配息約 <strong>${newMonthlyIncomeWan} 萬</strong><br>
                         • 45 歲總月配息約 <strong>${totalMonthlyPassiveWan} 萬</strong>（含現在的被動收入）<br>
                         • 以 7 萬/月目標來看，<strong>45 歲達標機率非常高（約 80–90%）</strong>，前提是能持續維持現在的儲蓄紀律。`;
-                    } else if (totalPassive >= 6) {
+                    } else if (totalPassive45Wan >= 6) {
                         targetPred = `以目前月盈餘約 <strong>${(monthlySurplus/10000).toFixed(1)} 萬</strong> 計算：<br>
                         • 7 年後新增月配息約 <strong>${newMonthlyIncomeWan} 萬</strong><br>
                         • 45 歲總月配息約 <strong>${totalMonthlyPassiveWan} 萬</strong>（接近 7 萬目標）<br>
@@ -1525,14 +1745,14 @@
                 }
                 safeSetHTML('target_prediction', targetPred);
 
-                // ===== 目標月配息 → 反推需要資產 & 報酬率 =====
+                // 目標月配息 → 資本需求
                 const targetMonthly = parseFloat(document.getElementById('target_monthly_income').value) || 70000;
                 const targetYieldPct = parseFloat(document.getElementById('target_yield').value) || 8;
                 const targetYield = targetYieldPct / 100;
 
                 let requiredCapital = 0;
                 if (targetYield > 0) {
-                    requiredCapital = targetMonthly * 12 / targetYield; // 元
+                    requiredCapital = targetMonthly * 12 / targetYield;
                 }
 
                 const financialAssetsWan = assetPolicyA + assetPolicyB + assetPolicyC + assetPolicyD + assetETF;
@@ -1564,7 +1784,7 @@
                 }
                 safeSetHTML('capital_comment', capitalComment);
 
-                // ===== 槓桿安全雷達 / 總體評分 =====
+                // 槓桿安全雷達
                 const avgPolicyRatio = (infoA.ratio + infoB.ratio + infoC.ratio + infoD.ratio) / 4;
                 const cashMonths = totalExpense > 0 ? (assetCash * 10000 / totalExpense) : 99;
 
@@ -1573,7 +1793,6 @@
 
                 if (lev > 30) safetyScore -= (lev - 30) * 0.7;
                 if (avgPolicyRatio > 40) safetyScore -= (avgPolicyRatio - 40) * 0.5;
-
                 if (cashMonths >= 12) {
                     safetyScore += 10;
                 } else if (cashMonths >= 6) {
@@ -1677,8 +1896,9 @@
             }
         }
 
-        // 頁面載入時自動載入數據和計算
+        // 頁面載入
         window.onload = function() {
+            initDarkMode();
             try {
                 const savedData = localStorage.getItem('financialTrackerDataV2');
                 if (savedData) {
