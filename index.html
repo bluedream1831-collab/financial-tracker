@@ -182,7 +182,7 @@
             background: #f9fafb;
         }
         
-        /* 進度條樣式 */
+        /* 進度條樣式（個別資產） */
         .progress-bar-container {
             margin: 15px 0;
             padding: 10px;
@@ -265,7 +265,47 @@
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 20px;
         }
-        
+
+        /* 投資總攬 - 整體借款比進度條 */
+        .overall-ltv-container {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f3f4f6;
+            border-radius: 10px;
+        }
+        .overall-ltv-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #374151;
+        }
+        .overall-ltv-track {
+            width: 100%;
+            height: 28px;
+            background: #e5e7eb;
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        .overall-ltv-fill {
+            height: 100%;
+            width: 0%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #111827;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: width 0.5s ease-out, background 0.3s;
+        }
+        .overall-ltv-scale {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+            font-size: 0.75em;
+            color: #6b7280;
+        }
+
         @media print {
             body {
                 background: white;
@@ -289,7 +329,7 @@
             <div style="color: #d97706; font-size: 1em; margin-top: 8px; font-weight: 500;">
                 📊 採用4%保守年化報酬率 | 實際報酬率若更高則可提前達標
             </div>
-            <div style="color: #999; font-size: 0.95em; margin-top: 5px;">✨ 功能：借款比進度條 + 跌抗計算 + 可編輯利息 + 成本/報酬率計算</div>
+            <div style="color: #999; font-size: 0.95em; margin-top: 5px;">✨ 功能：借款比進度條 + 跌抗計算 + 成本/報酬率 + 投資總攬 + 收支模擬</div>
             <div style="margin-top: 15px;">
                 <button class="button" onclick="calculateAll()">🔄 重新計算全部</button>
                 <button class="button" onclick="window.print()">🖨️ 列印報告</button>
@@ -303,8 +343,8 @@
             <h2 class="section-title">📊 資產與負債明細（可編輯）</h2>
             
             <div class="alert alert-info">
-                <strong>💡 如何使用：</strong>直接點擊數字即可修改！修改後按Enter或點擊其他地方，系統會自動重新計算所有數據。<br>
-                <strong>🎯 新功能：</strong>各資產有「投入成本」＋「報酬率」，並新增投資總攬（保單＋ETF）。
+                <strong>💡 如何使用：</strong>直接點擊數字即可修改！修改後按 Enter 或點其他地方，系統會自動重算。<br>
+                <strong>🎯 新功能：</strong>各資產有「投入成本」＋「報酬率」，並新增投資總攬（保單＋ETF），且分開「保單總攬」、「ETF總攬」，再加一條「整體借款比進度條」。
             </div>
 
             <div class="alert alert-warning">
@@ -336,7 +376,6 @@
                         <input type="number" id="loan_policy_a" value="21.5" step="0.1" min="0" onchange="calculateAll()"> 萬
                     </div>
                     
-                    <!-- 借款比進度條 -->
                     <div class="progress-bar-container">
                         <div class="progress-bar-header">
                             <span style="color: #666;">借款比</span>
@@ -354,14 +393,12 @@
                         </div>
                     </div>
                     
-                    <!-- 跌抗距離 -->
                     <div id="margin_policy_a" class="margin-info safe">
                         <strong>🛡️ 跌抗距離</strong><br>
                         資產可下跌 <strong>42.9%</strong> 才到補繳線<br>
                         可下跌 <strong>49.2%</strong> 才到斷頭線
                     </div>
                     
-                    <!-- 報酬率 -->
                     <div style="margin: 10px 0; font-size: 0.9em; color: #999;">
                         報酬率：<span id="roi_policy_a">0.0</span>%
                     </div>
@@ -548,14 +585,14 @@
 
                 <!-- 現金 -->
                 <div class="policy-item">
-                    <h4 style="color: #333; margin-bottom: 15px;">現金</h4>
+                    <h4 style="color: #333; margin-bottom: 15px;">現金 & 可動用額度</h4>
                     <div style="margin: 10px 0;">
                         <span style="color: #666;">帳面現金：</span>
                         <input type="number" id="asset_cash" value="45" step="0.1" min="0" onchange="calculateAll()"> 萬
                     </div>
                     <div style="margin: 10px 0; font-size: 0.9em; color: #999;">
-                        + ETF可借 50萬<br>
-                        + 循環信貸可借 36萬<br>
+                        + ETF可再借：50萬<br>
+                        + 循環信貸可借：36萬<br>
                         = 總可動用 <span style="font-weight: bold; color: #10b981;"><span id="total_available_cash">131</span>萬</span>
                     </div>
                 </div>
@@ -607,6 +644,100 @@
                     <div class="summary-label">整體投資借款比（LTV）</div>
                     <div class="summary-value" style="color: #ea580c;">
                         <span id="total_invest_ltv">0.0</span> %
+                    </div>
+                </div>
+            </div>
+
+            <!-- 整體投資借款比進度條 -->
+            <div class="overall-ltv-container">
+                <div class="overall-ltv-header">
+                    <span>整體投資借款比視覺化（保單＋ETF 部位）</span>
+                    <span id="overall_ltv_label">0.0%</span>
+                </div>
+                <div class="overall-ltv-track">
+                    <div id="overall_ltv_fill" class="overall-ltv-fill">0.0%</div>
+                </div>
+                <div class="overall-ltv-scale">
+                    <span>0%</span>
+                    <span>40%</span>
+                    <span>60%</span>
+                    <span>80%</span>
+                    <span>90%+</span>
+                </div>
+                <div style="margin-top:6px; font-size:0.8em; color:#4b5563;">
+                    色階說明：<span style="color:#16a34a;">0–40% 綠色（很安全）</span> ｜ 
+                    <span style="color:#65a30d;">40–60% 黃綠（健康）</span> ｜ 
+                    <span style="color:#eab308;">60–80% 黃色（需注意）</span> ｜ 
+                    <span style="color:#f97316;">80–90% 橘色（偏高）</span> ｜ 
+                    <span style="color:#ef4444;">90%+ 紅色（過高，風險大）</span>
+                </div>
+            </div>
+
+            <!-- 保單總攬 & ETF總攬 -->
+            <h4 style="color:#334155; margin:25px 0 10px 0;">📦 保單總攬（A+B+C+D）</h4>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-label">保單淨值合計</div>
+                    <div class="summary-value" style="color:#10b981;">
+                        <span id="policy_total_asset">0</span> 萬
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">保單成本合計</div>
+                    <div class="summary-value" style="color:#1d4ed8;">
+                        <span id="policy_total_cost">0</span> 萬
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">保單借款合計</div>
+                    <div class="summary-value" style="color:#b91c1c;">
+                        <span id="policy_total_loan">0</span> 萬
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">保單整體報酬率</div>
+                    <div class="summary-value" style="color:#047857;">
+                        <span id="policy_total_roi">0.0</span> %
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">保單整體借款比</div>
+                    <div class="summary-value" style="color:#ea580c;">
+                        <span id="policy_total_ltv">0.0</span> %
+                    </div>
+                </div>
+            </div>
+
+            <h4 style="color:#334155; margin:10px 0 10px 0;">📦 ETF 總攬</h4>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-label">ETF 淨值合計</div>
+                    <div class="summary-value" style="color:#10b981;">
+                        <span id="etf_total_asset">0</span> 萬
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">ETF 成本合計</div>
+                    <div class="summary-value" style="color:#1d4ed8;">
+                        <span id="etf_total_cost">0</span> 萬
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">ETF 借款合計</div>
+                    <div class="summary-value" style="color:#b91c1c;">
+                        <span id="etf_total_loan">0</span> 萬
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">ETF 整體報酬率</div>
+                    <div class="summary-value" style="color:#047857;">
+                        <span id="etf_total_roi">0.0</span> %
+                    </div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">ETF 整體借款比</div>
+                    <div class="summary-value" style="color:#ea580c;">
+                        <span id="etf_total_ltv">0.0</span> %
                     </div>
                 </div>
             </div>
@@ -780,7 +911,7 @@
                         自動計算值：<span id="interest_etf_auto">100</span>元
                     </div>
                 </div>
-                <div class="expense-item" style="border-left-color: #ef4444; background: #fee2e2%;">
+                <div class="expense-item" style="border-left-color: #ef4444; background: #fee2e2;">
                     <div style="color: #991b1b; margin-bottom: 5px; font-weight: bold;">投資相關利息小計</div>
                     <div style="font-size: 1.5em; font-weight: bold; color: #ef4444;">
                         <span id="total_interest">8,900</span> 元/月
@@ -921,6 +1052,7 @@
                 <ol style="margin-left: 20px;">
                     <li>各保單＋ETF：可輸入「投入成本、淨值、借款」，自動算出借款比、跌抗距離、單筆報酬率</li>
                     <li>投資總攬（保單＋ETF）：自動統計成本、淨值、總借款、整體投資報酬率、整體借款比</li>
+                    <li>保單總攬 / ETF 總攬：分開看兩個體系的槓桿與表現</li>
                     <li>整體資產負債：再加上房貸、信貸，算出「淨資產」與「整體槓桿率」</li>
                     <li>收支系統：月收支、儲蓄率、年可投資金額</li>
                     <li>45歲達標模擬：用保守4%年化估算未來資產與月配息</li>
@@ -935,8 +1067,6 @@
             const element = document.getElementById(elementId);
             if (element) {
                 element.textContent = value;
-            } else {
-                console.warn(`元素 ${elementId} 不存在`);
             }
         }
 
@@ -944,8 +1074,6 @@
             const element = document.getElementById(elementId);
             if (element) {
                 element.style[property] = value;
-            } else {
-                console.warn(`元素 ${elementId} 不存在`);
             }
         }
 
@@ -953,8 +1081,6 @@
             const element = document.getElementById(elementId);
             if (element) {
                 element.innerHTML = value;
-            } else {
-                console.warn(`元素 ${elementId} 不存在`);
             }
         }
 
@@ -972,10 +1098,10 @@
             }
             
             return {
-                ratio: ratio,
-                marginCallDropPct: marginCallDropPct,
-                liquidationDropPct: liquidationDropPct,
-                status: status
+                ratio,
+                marginCallDropPct,
+                liquidationDropPct,
+                status
             };
         }
 
@@ -985,12 +1111,10 @@
             return (asset - cost) / cost * 100;
         }
 
-        // 更新進度條和跌抗信息
+        // 更新個別進度條和跌抗信息
         function updateProgressBar(id, info, marginCall, liquidation) {
-            // 更新借款比顯示
             safeSetText('ratio_' + id, info.ratio.toFixed(1) + '%');
             
-            // 更新進度條
             const progressBar = document.getElementById('progress_' + id);
             if (progressBar) {
                 progressBar.style.width = Math.min(info.ratio, 100) + '%';
@@ -998,7 +1122,6 @@
                 progressBar.className = 'progress-bar-fill ' + info.status;
             }
             
-            // 更新跌抗信息
             const marginDiv = document.getElementById('margin_' + id);
             if (!marginDiv) return;
             
@@ -1014,7 +1137,7 @@
                 statusText = '【警戒！接近補繳線】';
             }
             
-            // 特殊處理ETF（有145%警示線和130%追繳線）
+            // ETF 特別處理維持率
             if (id === 'etf') {
                 const maintRatio = (info.ratio > 0) ? (100 / info.ratio * 100).toFixed(0) : 999;
                 let maintStatus = '';
@@ -1042,34 +1165,67 @@
             }
         }
 
+        // 更新整體投資借款比進度條（顏色細緻分級）
+        function updateOverallLtvBar(ltv) {
+            const fill = document.getElementById('overall_ltv_fill');
+            const label = document.getElementById('overall_ltv_label');
+            if (!fill || !label) return;
+
+            const value = isNaN(ltv) ? 0 : ltv;
+            const showValue = value.toFixed(1) + '%';
+            label.textContent = showValue;
+            fill.textContent = showValue;
+            fill.style.width = Math.min(value, 100) + '%';
+
+            // 顏色區間：
+            // 0–40% → 綠色
+            // 40–60% → 黃綠
+            // 60–80% → 黃
+            // 80–90% → 橘
+            // 90%+ → 紅
+            let bg = '';
+            if (value < 40) {
+                bg = 'linear-gradient(90deg, #16a34a, #22c55e)'; // 綠
+            } else if (value < 60) {
+                bg = 'linear-gradient(90deg, #65a30d, #84cc16)'; // 黃綠
+            } else if (value < 80) {
+                bg = 'linear-gradient(90deg, #eab308, #facc15)'; // 黃
+            } else if (value < 90) {
+                bg = 'linear-gradient(90deg, #f97316, #fb923c)'; // 橘
+            } else {
+                bg = 'linear-gradient(90deg, #ef4444, #dc2626)'; // 紅
+            }
+            fill.style.background = bg;
+        }
+
         // 計算所有數據
         function calculateAll() {
             try {
-                // 讀取各資產淨值
+                // 1. 讀取各資產淨值
                 const assetPolicyA = parseFloat(document.getElementById('asset_policy_a').value) || 0;
                 const assetPolicyB = parseFloat(document.getElementById('asset_policy_b').value) || 0;
                 const assetPolicyC = parseFloat(document.getElementById('asset_policy_c').value) || 0;
                 const assetPolicyD = parseFloat(document.getElementById('asset_policy_d').value) || 0;
-                const assetETF = parseFloat(document.getElementById('asset_etf').value) || 0;
-                const assetCash = parseFloat(document.getElementById('asset_cash').value) || 0;
+                const assetETF     = parseFloat(document.getElementById('asset_etf').value) || 0;
+                const assetCash    = parseFloat(document.getElementById('asset_cash').value) || 0;
 
-                // 讀取各資產借款
+                // 2. 讀取各資產借款
                 const loanPolicyA = parseFloat(document.getElementById('loan_policy_a').value) || 0;
                 const loanPolicyB = parseFloat(document.getElementById('loan_policy_b').value) || 0;
                 const loanPolicyC = parseFloat(document.getElementById('loan_policy_c').value) || 0;
                 const loanPolicyD = parseFloat(document.getElementById('loan_policy_d').value) || 0;
-                const loanETF = parseFloat(document.getElementById('loan_etf').value) || 0;
-                const loanCredit = parseFloat(document.getElementById('loan_credit').value) || 0;
-                const loanMortgage = parseFloat(document.getElementById('loan_mortgage').value) || 0;
+                const loanETF     = parseFloat(document.getElementById('loan_etf').value) || 0;
+                const loanCredit  = parseFloat(document.getElementById('loan_credit').value) || 0;
+                const loanMortgage= parseFloat(document.getElementById('loan_mortgage').value) || 0;
 
-                // 讀取投入成本
+                // 3. 讀取投入成本
                 const costPolicyA = parseFloat(document.getElementById('cost_policy_a').value) || 0;
                 const costPolicyB = parseFloat(document.getElementById('cost_policy_b').value) || 0;
                 const costPolicyC = parseFloat(document.getElementById('cost_policy_c').value) || 0;
                 const costPolicyD = parseFloat(document.getElementById('cost_policy_d').value) || 0;
-                const costETF = parseFloat(document.getElementById('cost_etf').value) || 0;
+                const costETF     = parseFloat(document.getElementById('cost_etf').value) || 0;
 
-                // 保單ABC：80%補繳、90%斷頭
+                // 4. 個別借款比 / 跌抗
                 const infoA = calculateLeverageInfo(assetPolicyA, loanPolicyA, 80, 90);
                 updateProgressBar('policy_a', infoA, 80, 90);
                 
@@ -1079,84 +1235,110 @@
                 const infoC = calculateLeverageInfo(assetPolicyC, loanPolicyC, 80, 90);
                 updateProgressBar('policy_c', infoC, 80, 90);
                 
-                // 保單D：60%補繳、70%斷頭
                 const infoD = calculateLeverageInfo(assetPolicyD, loanPolicyD, 60, 70);
                 updateProgressBar('policy_d', infoD, 60, 70);
                 
-                // ETF質押
                 const infoETF = calculateLeverageInfo(assetETF, loanETF, 68.97, 76.9);
                 updateProgressBar('etf', infoETF, 68.97, 76.9);
 
-                // 單筆報酬率
-                const roiA = calculateROI(assetPolicyA, costPolicyA);
-                const roiB = calculateROI(assetPolicyB, costPolicyB);
-                const roiC = calculateROI(assetPolicyC, costPolicyC);
-                const roiD = calculateROI(assetPolicyD, costPolicyD);
-                const roiETF = calculateROI(assetETF, costETF);
+                // 5. 單筆報酬率
+                const roiA  = calculateROI(assetPolicyA, costPolicyA);
+                const roiB  = calculateROI(assetPolicyB, costPolicyB);
+                const roiC  = calculateROI(assetPolicyC, costPolicyC);
+                const roiD  = calculateROI(assetPolicyD, costPolicyD);
+                const roiEtf= calculateROI(assetETF,     costETF);
 
                 safeSetText('roi_policy_a', roiA.toFixed(1));
                 safeSetText('roi_policy_b', roiB.toFixed(1));
                 safeSetText('roi_policy_c', roiC.toFixed(1));
                 safeSetText('roi_policy_d', roiD.toFixed(1));
-                safeSetText('roi_etf', roiETF.toFixed(1));
+                safeSetText('roi_etf',      roiEtf.toFixed(1));
 
-                // 投資總攬（保單＋ETF）
+                // 6. 投資總攬（保單＋ETF）
                 const totalInvestAsset = assetPolicyA + assetPolicyB + assetPolicyC + assetPolicyD + assetETF;
                 const totalInvestCost  = costPolicyA  + costPolicyB  + costPolicyC  + costPolicyD  + costETF;
                 const totalInvestLoan  = loanPolicyA  + loanPolicyB  + loanPolicyC  + loanPolicyD  + loanETF;
-                const totalInvestROI   = totalInvestCost > 0 ? ( (totalInvestAsset - totalInvestCost) / totalInvestCost * 100 ) : 0;
-                const totalInvestLTV   = totalInvestAsset > 0 ? ( totalInvestLoan / totalInvestAsset * 100 ) : 0;
+                const totalInvestROI   = totalInvestCost > 0 ? ((totalInvestAsset - totalInvestCost) / totalInvestCost * 100) : 0;
+                const totalInvestLTV   = totalInvestAsset > 0 ? (totalInvestLoan / totalInvestAsset * 100) : 0;
 
                 safeSetText('total_invest_asset', totalInvestAsset.toFixed(0));
-                safeSetText('total_invest_cost', totalInvestCost.toFixed(0));
-                safeSetText('total_invest_loan', totalInvestLoan.toFixed(0));
-                safeSetText('total_invest_roi', totalInvestROI.toFixed(1));
-                safeSetText('total_invest_ltv', totalInvestLTV.toFixed(1));
+                safeSetText('total_invest_cost',  totalInvestCost.toFixed(0));
+                safeSetText('total_invest_loan',  totalInvestLoan.toFixed(0));
+                safeSetText('total_invest_roi',   totalInvestROI.toFixed(1));
+                safeSetText('total_invest_ltv',   totalInvestLTV.toFixed(1));
 
-                // 總資產與負債（含現金＋房貸＋信貸）
-                const totalAssets = totalInvestAsset + assetCash;
-                const totalLiabilities = totalInvestLoan + loanCredit + loanMortgage;
-                const netAssets = totalAssets - totalLiabilities;
-                const leverageRatio = totalAssets > 0 ? (totalLiabilities / totalAssets * 100).toFixed(1) : 0;
+                // 6-1. 更新整體投資借款比進度條
+                updateOverallLtvBar(totalInvestLTV);
 
-                safeSetText('total_assets', totalAssets.toFixed(0));
+                // 7. 保單總攬
+                const policyAsset = assetPolicyA + assetPolicyB + assetPolicyC + assetPolicyD;
+                const policyCost  = costPolicyA  + costPolicyB  + costPolicyC  + costPolicyD;
+                const policyLoan  = loanPolicyA  + loanPolicyB  + loanPolicyC  + loanPolicyD;
+                const policyROI   = policyCost > 0 ? ((policyAsset - policyCost) / policyCost * 100) : 0;
+                const policyLTV   = policyAsset > 0 ? (policyLoan / policyAsset * 100) : 0;
+
+                safeSetText('policy_total_asset', policyAsset.toFixed(0));
+                safeSetText('policy_total_cost',  policyCost.toFixed(0));
+                safeSetText('policy_total_loan',  policyLoan.toFixed(0));
+                safeSetText('policy_total_roi',   policyROI.toFixed(1));
+                safeSetText('policy_total_ltv',   policyLTV.toFixed(1));
+
+                // 8. ETF 總攬（目前只有一組，但保留架構，未來要加其他ETF也OK）
+                const etfAsset = assetETF;
+                const etfCost  = costETF;
+                const etfLoan  = loanETF;
+                const etfROI   = etfCost > 0 ? ((etfAsset - etfCost) / etfCost * 100) : 0;
+                const etfLTV   = etfAsset > 0 ? (etfLoan / etfAsset * 100) : 0;
+
+                safeSetText('etf_total_asset', etfAsset.toFixed(0));
+                safeSetText('etf_total_cost',  etfCost.toFixed(0));
+                safeSetText('etf_total_loan',  etfLoan.toFixed(0));
+                safeSetText('etf_total_roi',   etfROI.toFixed(1));
+                safeSetText('etf_total_ltv',   etfLTV.toFixed(1));
+
+                // 9. 總資產與負債（含現金＋房貸＋信貸）
+                const totalAssets      = totalInvestAsset + assetCash;
+                const totalLiabilities = totalInvestLoan  + loanCredit + loanMortgage;
+                const netAssets        = totalAssets - totalLiabilities;
+                const leverageRatio    = totalAssets > 0 ? (totalLiabilities / totalAssets * 100).toFixed(1) : 0;
+
+                safeSetText('total_assets',      totalAssets.toFixed(0));
                 safeSetText('total_liabilities', totalLiabilities.toFixed(0));
-                safeSetText('net_assets', netAssets.toFixed(0));
-                safeSetText('leverage_ratio', leverageRatio);
+                safeSetText('net_assets',        netAssets.toFixed(0));
+                safeSetText('leverage_ratio',    leverageRatio);
 
-                // 可動用現金
+                // 10. 可動用現金
                 const totalAvailableCash = assetCash + 50 + 36;
                 safeSetText('total_available_cash', totalAvailableCash.toFixed(0));
 
-                // 收入
-                const incomeActive = parseFloat(document.getElementById('income_active').value) || 0;
+                // 11. 收入
+                const incomeActive  = parseFloat(document.getElementById('income_active').value) || 0;
                 const incomePassive = parseFloat(document.getElementById('income_passive').value) || 0;
-                const totalIncome = incomeActive + incomePassive;
+                const totalIncome   = incomeActive + incomePassive;
 
                 // 固定支出
-                const expenseMortgage = parseFloat(document.getElementById('expense_mortgage').value) || 0;
-                const expenseCredit = parseFloat(document.getElementById('expense_credit').value) || 0;
-                const expenseLiving = parseFloat(document.getElementById('expense_living').value) || 0;
-                const expenseInsurance = parseFloat(document.getElementById('expense_insurance').value) || 0;
+                const expenseMortgage      = parseFloat(document.getElementById('expense_mortgage').value) || 0;
+                const expenseCredit        = parseFloat(document.getElementById('expense_credit').value) || 0;
+                const expenseLiving        = parseFloat(document.getElementById('expense_living').value) || 0;
+                const expenseInsurance     = parseFloat(document.getElementById('expense_insurance').value) || 0;
                 const expenseCommunication = parseFloat(document.getElementById('expense_communication').value) || 0;
-                const expenseHealth = parseFloat(document.getElementById('expense_health').value) || 0;
-                const totalFixedExpense = expenseMortgage + expenseCredit + expenseLiving + expenseInsurance + 
-                                        expenseCommunication + expenseHealth;
+                const expenseHealth        = parseFloat(document.getElementById('expense_health').value) || 0;
+                const totalFixedExpense    = expenseMortgage + expenseCredit + expenseLiving + expenseInsurance + expenseCommunication + expenseHealth;
 
                 // 彈性支出
                 const expenseEntertainment = parseFloat(document.getElementById('expense_entertainment').value) || 0;
-                const expenseShopping = parseFloat(document.getElementById('expense_shopping').value) || 0;
-                const expenseLearning = parseFloat(document.getElementById('expense_learning').value) || 0;
-                const expenseOther = parseFloat(document.getElementById('expense_other').value) || 0;
+                const expenseShopping      = parseFloat(document.getElementById('expense_shopping').value) || 0;
+                const expenseLearning      = parseFloat(document.getElementById('expense_learning').value) || 0;
+                const expenseOther         = parseFloat(document.getElementById('expense_other').value) || 0;
                 const totalFlexibleExpense = expenseEntertainment + expenseShopping + expenseLearning + expenseOther;
 
                 // 利息（保單＋ETF，可編輯）
                 const totalPolicyLoan = loanPolicyA + loanPolicyB + loanPolicyC + loanPolicyD;
                 const interestPolicyAuto = Math.max(0, Math.round(totalPolicyLoan * 10000 * 0.04 / 12));
-                const interestETFAuto = Math.max(0, Math.round(loanETF * 10000 * 0.03 / 12));
+                const interestETFAuto    = Math.max(0, Math.round(loanETF * 10000 * 0.03 / 12));
                 
                 const interestPolicyInputElement = document.getElementById('interest_policy_input');
-                const interestETFInputElement = document.getElementById('interest_etf_input');
+                const interestETFInputElement    = document.getElementById('interest_etf_input');
                 
                 let interestPolicyInput = parseFloat(interestPolicyInputElement.value);
                 if (!interestPolicyInput || isNaN(interestPolicyInput) || interestPolicyInput < 0) {
@@ -1173,49 +1355,45 @@
                 const totalInterest = interestPolicyInput + interestETFInput;
 
                 // 顯示收入/支出
-                safeSetText('total_income', totalIncome.toLocaleString());
-                safeSetText('display_total_income', totalIncome.toLocaleString());
-                
-                safeSetText('total_fixed_expense', totalFixedExpense.toLocaleString());
+                safeSetText('total_income',           totalIncome.toLocaleString());
+                safeSetText('display_total_income',   totalIncome.toLocaleString());
+                safeSetText('total_fixed_expense',    totalFixedExpense.toLocaleString());
                 safeSetText('total_flexible_expense', totalFlexibleExpense.toLocaleString());
-                
-                safeSetText('interest_policy_auto', interestPolicyAuto.toLocaleString());
-                safeSetText('interest_etf_auto', interestETFAuto.toLocaleString());
-                safeSetText('total_interest', totalInterest.toLocaleString());
+                safeSetText('interest_policy_auto',   interestPolicyAuto.toLocaleString());
+                safeSetText('interest_etf_auto',      interestETFAuto.toLocaleString());
+                safeSetText('total_interest',         totalInterest.toLocaleString());
+                safeSetText('display_policy_loan',    totalPolicyLoan.toFixed(1));
+                safeSetText('display_etf_loan',       loanETF.toFixed(1));
 
-                safeSetText('display_policy_loan', totalPolicyLoan.toFixed(1));
-                safeSetText('display_etf_loan', loanETF.toFixed(1));
-
-                const totalExpense = totalFixedExpense + totalFlexibleExpense + totalInterest;
-                const monthlySurplus = totalIncome - totalExpense;
-                const savingRate = totalIncome > 0 ? (monthlySurplus / totalIncome * 100).toFixed(1) : 0;
-                const annualInvestment = monthlySurplus * 12;
+                const totalExpense    = totalFixedExpense + totalFlexibleExpense + totalInterest;
+                const monthlySurplus  = totalIncome - totalExpense;
+                const savingRate      = totalIncome > 0 ? (monthlySurplus / totalIncome * 100).toFixed(1) : 0;
+                const annualInvestment= monthlySurplus * 12;
 
                 safeSetText('display_total_expense', totalExpense.toLocaleString());
-                safeSetText('monthly_surplus', monthlySurplus.toLocaleString());
-                safeSetText('saving_rate', savingRate);
-                safeSetText('annual_investment', annualInvestment.toLocaleString());
+                safeSetText('monthly_surplus',       monthlySurplus.toLocaleString());
+                safeSetText('saving_rate',           savingRate);
+                safeSetText('annual_investment',     annualInvestment.toLocaleString());
 
-                // 達標評估
-                const passiveIncome = incomePassive / 10000;
-                const gapToTarget = 7 - passiveIncome;
-                const completionRate = (passiveIncome / 7 * 100).toFixed(0);
+                // 12. 達標評估
+                const passiveIncome   = incomePassive / 10000;
+                const gapToTarget     = 7 - passiveIncome;
+                const completionRate  = (passiveIncome / 7 * 100).toFixed(0);
 
                 safeSetText('display_passive_income', passiveIncome.toFixed(1));
-                safeSetText('gap_to_target', gapToTarget.toFixed(1));
-                safeSetText('completion_rate', completionRate);
+                safeSetText('gap_to_target',          gapToTarget.toFixed(1));
+                safeSetText('completion_rate',        completionRate);
 
-                const annualInvWan = (monthlySurplus * 12 / 10000).toFixed(1);
-                const sevenYearInv = (annualInvWan * 7).toFixed(1);
+                const annualInvWan    = (monthlySurplus * 12 / 10000).toFixed(1);
+                const sevenYearInv    = (annualInvWan * 7).toFixed(1);
 
                 safeSetText('display_annual_inv', annualInvWan);
-                safeSetText('seven_year_inv', sevenYearInv);
+                safeSetText('seven_year_inv',     sevenYearInv);
 
                 // 保守情境（4%年化）
                 const r_conservative = 0.04;
                 const years = 7;
-                const monthlyInvestment = monthlySurplus;
-                const yearlyInvestment = monthlyInvestment * 12;
+                const yearlyInvestment = monthlySurplus * 12;
                 let futureValue_conservative = 0;
                 if (r_conservative > 0) {
                     futureValue_conservative = yearlyInvestment * (Math.pow(1 + r_conservative, years) - 1) / r_conservative;
@@ -1224,16 +1402,16 @@
                 }
                 const currentAssetGrowth = netAssets * Math.pow(1 + r_conservative, years);
                 const estimatedNetworth45_conservative = currentAssetGrowth + futureValue_conservative;
-                const estimatedIncome45_conservative = (estimatedNetworth45_conservative / 10000 * r_conservative / 12).toFixed(1);
+                const estimatedIncome45_conservative   = (estimatedNetworth45_conservative / 10000 * r_conservative / 12).toFixed(1);
                 
                 safeSetText('estimated_networth_45', Math.round(estimatedNetworth45_conservative / 10000));
-                safeSetText('estimated_income_45', estimatedIncome45_conservative);
+                safeSetText('estimated_income_45',   estimatedIncome45_conservative);
 
                 // 中性情境（5%年化）
                 const r_moderate = 0.05;
                 const futureValue_moderate = yearlyInvestment * (Math.pow(1 + r_moderate, years) - 1) / r_moderate;
                 const estimatedNetworth45_moderate = netAssets * Math.pow(1 + r_moderate, years) + futureValue_moderate;
-                const estimatedIncome45_moderate = (estimatedNetworth45_moderate / 10000 * r_moderate / 12).toFixed(1);
+                const estimatedIncome45_moderate   = (estimatedNetworth45_moderate / 10000 * r_moderate / 12).toFixed(1);
 
                 // 達標機率敘述
                 let targetPred = '';
@@ -1327,7 +1505,7 @@
             }
         }
 
-        // 頁面載入時自動載入數據和計算
+        // 頁面載入時自動計算
         window.onload = function() {
             try {
                 const savedData = localStorage.getItem('financialTrackerDataV2');
@@ -1338,11 +1516,7 @@
                 }
             } catch (error) {
                 console.error('頁面初始化時發生錯誤:', error);
-                try {
-                    calculateAll();
-                } catch (e) {
-                    console.error('初始計算失敗:', e);
-                }
+                calculateAll();
             }
         };
     </script>
